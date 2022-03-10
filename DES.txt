@@ -1,0 +1,27 @@
+package ceasercipher;
+import java.util.*;
+import javax.crypto.*;
+public class DES {
+	
+	public static void main (String[] args)
+	{
+		try {
+			KeyGenerator kg=KeyGenerator.getInstance("DES");
+			SecretKey sk=kg.generateKey();
+			Cipher cipher=Cipher.getInstance("DES/ECB/PKCS5Padding");
+			cipher.init(Cipher.ENCRYPT_MODE, sk);
+			byte text[]="akash".getBytes();
+			System.out.println("THe message"+new String(text));
+			byte[] n =cipher.doFinal(text);
+			cipher.init(Cipher.DECRYPT_MODE, sk);
+			byte[] p =cipher.doFinal(n);
+			System.out.println("THe message"+n);
+			System.out.println("THe message"+new String(p));
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	
+}

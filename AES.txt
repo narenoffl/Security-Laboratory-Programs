@@ -1,0 +1,52 @@
+package ceasercipher;
+import java.security.*;
+import java.util.*;
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+
+
+public class AES {
+	
+	private static SecretKeySpec seckey;
+	private static MessageDigest sha = null; 
+	private static byte[]  key ;
+	public static void setkey(String mykey) throws Exception
+	{
+		key=mykey.getBytes("UTF-8");
+		sha=MessageDigest.getInstance("SHA-1");
+		key=sha.digest(key);
+		key=Arrays.copyOf(key, 16);
+		seckey=new SecretKeySpec(key,"AES");
+		
+		
+	}
+	public static String encrypt(String str ,String key) throws Exception
+	{
+		setkey(key);
+		Cipher cipher=Cipher.getInstance("AES/ECB/PKCS5Padding");
+		cipher.init(Cipher.ENCRYPT_MODE,seckey);
+		return Base64.getEncoder().encodeToString(cipher.doFinal(str.getBytes("UTF-8")));
+	
+		
+	}
+	public static String decrypt(String str ,String key) throws Exception
+	{
+		setkey(key);
+		Cipher cipher=Cipher.getInstance("AES/ECB/PKCS5Padding");
+		cipher.init(Cipher.DECRYPT_MODE,seckey);
+		return new String(cipher.doFinal(Base64.getDecoder().decode(str)));
+	
+		
+	}
+	public static void main(String[] args) throws Exception
+	{
+		String msg="akash";
+		String seckey="vickysanjay";
+		String n=encrypt(msg,seckey);
+		String y=decrypt(n,seckey);
+		System.out.println("THe message " +n);
+		System.out.println("THe message " +y);
+	}
+	
+
+}

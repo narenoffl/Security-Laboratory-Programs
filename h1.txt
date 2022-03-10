@@ -1,0 +1,67 @@
+package ceasercipher;
+import java.util.*;
+public class h1 {
+	
+	public static String alpha="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public static int key[][]= {{1,2,1},{2,3,2},{2,2,1}};
+	public static int inverse[][]= {{-1,0,1},{2,-1,0},{-2,2,-1}};
+	
+	
+	public static void main(String[] args)
+	{
+		String msg="AKASH";
+		int temp=msg.length()%3;
+		for(int i=0;i<3-temp;i++) {
+			msg+='X';
+		}
+		System.out.println("Encrypted message"+msg);
+		String u="";
+		String y="";
+		char armsg[]=msg.toCharArray();
+		
+		for(int i=0;i<msg.length();i=i+3)
+		{
+			u+=encrypt(armsg[i],armsg[i+1],armsg[i+2]);
+		}
+		char demsg[]=u.toCharArray();
+		System.out.println("Encrypted message"+u);
+		for(int i=0;i<u.length();i+=3)
+		{
+			y+=decrypt(demsg[i],demsg[i+1],demsg[i+2]);
+		}
+		System.out.println("Decrypted message"+y);
+	}
+	public static String encrypt(char c1,char c2,char c3)
+	{
+	String rit="";
+	int x,y,z;	
+	int pos_a=(int)c1-65;
+	int pos_b=(int)c2-65;
+	int pos_c=(int)c3-65;
+		x=pos_a*key[0][0]+pos_b*key[1][0]+pos_c*key[2][0];
+		y=pos_a*key[0][1]+pos_b*key[1][1]+pos_c*key[2][1];
+		z=pos_a*key[0][2]+pos_b*key[1][2]+pos_c*key[2][2];
+		c1=alpha.charAt(x%26);
+		c2=alpha.charAt(y%26);
+		c3=alpha.charAt(z%26);
+		rit=""+c1+c2+c3;
+		return rit;
+	}
+	public static String decrypt(char c1,char c2,char c3)
+	{
+	String rit="";
+	int x,y,z;	
+	int pos_a=c1-65;
+	int pos_b=c2-65;
+	int pos_c=c3-65;
+		x=pos_a*inverse[0][0]+pos_b*inverse[1][0]+pos_c*inverse[2][0];
+		y=pos_a*inverse[0][1]+pos_b*inverse[1][1]+pos_c*inverse[2][1];
+		z=pos_a*inverse[0][2]+pos_b*inverse[1][2]+pos_c*inverse[2][2];
+		c1=alpha.charAt((x%26<0)?26+x%26:x%26);
+		c2=alpha.charAt((y%26<0)?26+y%26:y%26);
+		c3=alpha.charAt((z%26<0)?26+z%26:z%26);
+		rit=""+c1+c2+c3;
+		return rit;
+	}
+
+}

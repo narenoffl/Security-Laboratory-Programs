@@ -1,0 +1,49 @@
+package ceasercipher;
+import java.util.*;
+
+public class c1 {
+	public static String alpha ="ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+	
+	
+public static void main(String[] args)
+{
+	Scanner sc= new Scanner(System.in);
+	System.out.println("Enter the depth");
+	
+	int a=sc.nextInt();
+	System.out.println("Enter the message");
+	String msg=sc.next();
+	msg=msg.toUpperCase();
+	String y=encrypt(msg,a);
+	System.out.println("Encrypted message"+y);
+	String u=decrypt(y,a);
+	System.out.println("Decrypted message"+u);
+}	
+public static String encrypt( String h,int j )
+{
+	int temp;
+	String en="";
+	for(int i=0;i<h.length();i++)
+	{
+		temp=(h.charAt(i)-65+j)%26;
+		en+=alpha.charAt(temp);
+	}
+	
+	
+	return en ;
+}
+public static String decrypt( String d,int j )
+{
+	int temp;
+	String de="";
+	for(int i=0;i<d.length();i++)
+	{
+		temp=(d.charAt(i)+65-j)%26;
+		de+=alpha.charAt(temp);
+	}
+	
+	
+	return de;
+}
+	
+}
